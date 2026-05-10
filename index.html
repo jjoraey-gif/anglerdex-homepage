@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnglerDex — 나만의 물고기 도감을 완성하세요</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Pretendard', -apple-system, BlinkMacSystemFont,
+                   'Segoe UI', sans-serif;
+      color: #1A1A1A;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== COLORS ===== */
+    :root {
+      --orange: #F57C00;
+      --orange-light: #FFF3E0;
+      --orange-mid: #FFE0B2;
+      --gray-bg: #F5F5F5;
+      --gray-border: #E0E0E0;
+      --text-main: #1A1A1A;
+      --text-sub: #888888;
+      --white: #ffffff;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span.orange { color: var(--orange); }
+    .nav-logo span.dark   { color: #1A1A1A; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 12px;
+    }
+    .nav-cta:hover { background: #e06900; color: #fff; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding-top: 64px;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-left {}
+    .hero-badge {
+      display: inline-block;
+      background: var(--orange-light);
+      border: 1.5px solid var(--orange);
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .hero-title .orange { color: var(--orange); }
+    .hero-subtitle-big {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #e06900; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--gray-border);
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+    .hero-stats {
+      margin-top: 48px;
+      display: flex;
+      gap: 32px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--orange);
+      letter-spacing: -0.5px;
+    }
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+    .stat-divider {
+      width: 1px;
+      background: var(--gray-border);
+      align-self: stretch;
+    }
+
+    /* Hero phone mockup */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .phone-stack {
+      position: relative;
+      width: 280px;
+      height: 580px;
+    }
+    .phone-mockup {
+      position: absolute;
+      width: 260px;
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.18);
+      border: 8px solid #1A1A1A;
+      background: #111;
+    }
+    .phone-mockup img {
+      width: 100%;
+      display: block;
+    }
+    .phone-main {
+      left: 0; top: 0;
+      z-index: 2;
+    }
+    .phone-back {
+      left: 40px; top: 40px;
+      z-index: 1;
+      opacity: 0.6;
+      transform: scale(0.92);
+    }
+    /* floating accent */
+    .hero-accent-1 {
+      position: absolute;
+      width: 320px; height: 320px;
+      background: var(--orange-light);
+      border-radius: 50%;
+      right: -60px; top: -60px;
+      z-index: 0;
+    }
+    .hero-accent-2 {
+      position: absolute;
+      width: 180px; height: 180px;
+      background: var(--orange-mid);
+      border-radius: 50%;
+      left: -40px; bottom: -20px;
+      z-index: 0;
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 100px 40px;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ===== FEATURES STRIP ===== */
+    .features-strip {
+      background: var(--orange);
+      padding: 0;
+    }
+    .strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .strip-item {
+      padding: 36px 32px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    .strip-item:last-child { border-right: none; }
+    .strip-num {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+    .strip-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-top: 4px;
+    }
+
+    /* ===== FEATURE BLOCKS ===== */
+    .feature-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .feature-block.reverse { direction: rtl; }
+    .feature-block.reverse > * { direction: ltr; }
+    .feature-text {}
+    .feature-bullets {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .bullet-dot {
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .bullet-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    .bullet-text span {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* Phone in feature */
+    .feature-phone {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+    .feature-phone-img {
+      width: 240px;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+      border: 7px solid #1A1A1A;
+      background: #111;
+    }
+    .feature-phone-img img {
+      width: 100%;
+      display: block;
+    }
+    .feature-phone-bg {
+      position: absolute;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    .bg-orange { background: var(--orange-light); }
+    .bg-gray   { background: var(--gray-bg); }
+
+    /* ===== SCREENSHOTS CAROUSEL ===== */
+    .screens-section {
+      background: var(--gray-bg);
+    }
+    .screens-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .screens-header .section-desc {
+      margin: 0 auto;
+    }
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .screen-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transition: transform 0.25s;
+    }
+    .screen-card:hover { transform: translateY(-6px); }
+    .screen-card-img {
+      width: 100%;
+      aspect-ratio: 9/19;
+      overflow: hidden;
+    }
+    .screen-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+    .screen-card-label {
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      border-top: 1px solid var(--gray-border);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .step-card {
+      background: var(--gray-bg);
+      border-radius: 20px;
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--orange);
+    }
+    .step-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--orange);
+      opacity: 0.15;
+      position: absolute;
+      top: 20px; right: 24px;
+      line-height: 1;
+    }
+    .step-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .step-desc {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-section {
+      background: var(--orange);
+      text-align: center;
+      padding: 100px 40px;
+    }
+    .cta-section .section-tag {
+      color: rgba(255,255,255,0.7);
+    }
+    .cta-section .section-title {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .cta-section .section-desc {
+      color: rgba(255,255,255,0.8);
+      margin: 0 auto 40px;
+    }
+    .cta-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--orange);
+      font-size: 16px;
+      font-weight: 800;
+      padding: 16px 36px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+    .btn-white-outline {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.5);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-white-outline:hover { border-color: #fff; transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111;
+      color: rgba(255,255,255,0.5);
+      padding: 48px 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+    }
+    .footer-logo .orange { color: var(--orange); }
+    .footer-logo .light  { color: rgba(255,255,255,0.6); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      font-size: 12px;
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--gray-border);
+      margin: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-title { font-size: 40px; }
+      .hero-subtitle-big { font-size: 26px; }
+      .hero-right { display: none; }
+      .hero-stats { justify-content: center; }
+      .hero-actions { justify-content: center; }
+      .strip-inner { grid-template-columns: repeat(2, 1fr); }
+      .feature-block { grid-template-columns: 1fr; gap: 40px; }
+      .feature-block.reverse { direction: ltr; }
+      .feature-phone { display: none; }
+      .screens-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+    }
+    @media (max-width: 600px) {
+      .section-title { font-size: 30px; }
+      .screens-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .cta-btns { flex-direction: column; align-items: center; }
+      .strip-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-logo">
+    <span class="orange">Angler</span><span class="dark">Dex</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">기능</a>
+    <a href="#screens">스크린샷</a>
+    <a href="#how">사용법</a>
+    <a href="#download" class="nav-cta">앱 다운로드</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">낚시 기록 앱 — iOS 출시</div>
+      <div class="hero-title"><span class="orange">Angler</span>Dex</div>
+      <div class="hero-subtitle-big">나만의 물고기 도감을<br>완성하세요</div>
+      <p class="hero-desc">
+        잡은 물고기를 기록하고, 도감을 채우고,<br>
+        나만의 낚시 연대기를 완성하세요.<br>
+        민물부터 바다까지, 모든 어종을 수집해 보세요.
+      </p>
+      <div class="hero-actions">
+        <a href="#download" class="btn-primary">App Store 다운로드</a>
+        <a href="#screens" class="btn-outline">스크린샷 보기</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">75종</div>
+          <div class="stat-label">수집 가능한 어종</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">민물 + 바다</div>
+          <div class="stat-label">전 어종 커버</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">무료</div>
+          <div class="stat-label">완전 무료 서비스</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-accent-1"></div>
+      <div class="hero-accent-2"></div>
+      <div class="phone-stack">
+        <div class="phone-mockup phone-back">
+          <img src="./screenshot/IMG_3772.jpg" alt="도감 화면" />
+        </div>
+        <div class="phone-mockup phone-main">
+          <img src="./screenshot/IMG_3771.jpg" alt="로그인 화면" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STRIP ===== -->
+<div class="features-strip">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <div class="strip-num">75종</div>
+      <div class="strip-label">수집 가능 어종</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num">GPS</div>
+      <div class="strip-label">자동 위치 기록</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num">실시간</div>
+      <div class="strip-label">날씨·조류 자동 저장</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-num">무료</div>
+      <div class="strip-label">완전 무료 서비스</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FEATURES ===== -->
+<section id="features">
+  <div class="section-inner">
+
+    <!-- Feature 1 — 도감 -->
+    <div class="feature-block" style="margin-bottom: 100px;">
+      <div class="feature-text">
+        <div class="section-tag">도감</div>
+        <h2 class="section-title">잡은 물고기를<br>도감에 등록하세요</h2>
+        <p class="section-desc">
+          민물 26종, 바다 49종. 총 75종의 어종을 직접 낚아서 도감을 채워가세요.
+          새로운 어종을 처음 잡으면 해금 연출과 함께 도감이 완성됩니다.
+        </p>
+        <div class="feature-bullets">
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              어종 첫 해금 시 전체화면 연출
+              <span>새로운 어종을 잡는 순간의 짜릿함을 기록으로 남기세요</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              달성도 및 진행률 실시간 표시
+              <span>민물 / 바다 탭별로 도감 진행 상황을 한눈에 확인</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              어종별 상세 정보 및 추천 미끼
+              <span>서식지, 특징, 피크시즌, 추천 채비까지</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-phone">
+        <div class="feature-phone-bg bg-orange"></div>
+        <div class="feature-phone-img">
+          <img src="./screenshot/IMG_3772.jpg" alt="도감 화면" />
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" style="margin-bottom: 100px;" />
+
+    <!-- Feature 2 — MY (기록) -->
+    <div class="feature-block reverse" style="margin-bottom: 100px;">
+      <div class="feature-text">
+        <div class="section-tag">MY 기록</div>
+        <h2 class="section-title">나의 조과를<br>사진으로 기록하세요</h2>
+        <p class="section-desc">
+          사진을 찍으면 GPS, 날씨, 기온, 수온, 풍속, 일출·일몰, 월령까지 자동으로 기록됩니다.
+          나의 낚시 일지가 자동으로 완성됩니다.
+        </p>
+        <div class="feature-bullets">
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              EXIF GPS 자동 추출
+              <span>사진 속 위치 정보를 자동으로 읽어 기록</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              날씨·조환경 자동 저장
+              <span>기온, 풍속, 습도, 일출, 물때까지 자동 수집</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              다중 사진 등록 및 대표사진 설정
+              <span>한 조행에 여러 장의 사진을 기록으로 남기세요</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-phone">
+        <div class="feature-phone-bg bg-gray"></div>
+        <div class="feature-phone-img">
+          <img src="./screenshot/IMG_3777.jpg" alt="MY 화면" />
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" style="margin-bottom: 100px;" />
+
+    <!-- Feature 3 — 아카이브 -->
+    <div class="feature-block" style="margin-bottom: 100px;">
+      <div class="feature-text">
+        <div class="section-tag">아카이브</div>
+        <h2 class="section-title">나의 낚시 연대기를<br>한눈에 보세요</h2>
+        <p class="section-desc">
+          출조 횟수, 최대어, 방문 포인트, 연속 출조 기록.
+          월별 조과 분석 차트와 함께 낚시 연대기가 자동으로 기록됩니다.
+        </p>
+        <div class="feature-bullets">
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              주요 기록 대시보드
+              <span>최대어 · 도감 진행률 · 방문 포인트 · 연속 출조 한눈에</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              월별 조과 분석 차트
+              <span>최근 6개월 조과를 시각적으로 분석</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              낚시 지도
+              <span>내가 다녀온 포인트를 지도 위에서 한눈에 확인</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-phone">
+        <div class="feature-phone-bg bg-orange"></div>
+        <div class="feature-phone-img">
+          <img src="./screenshot/IMG_3774.jpg" alt="아카이브 화면" />
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider" style="margin-bottom: 100px;" />
+
+    <!-- Feature 4 — 명예의 전당 -->
+    <div class="feature-block">
+      <div class="feature-text">
+        <div class="section-tag">명예의 전당</div>
+        <h2 class="section-title">최대어 기록으로<br>랭킹에 도전하세요</h2>
+        <p class="section-desc">
+          어종별 최대어를 계측 길이로 기록하면 랭킹에 등록됩니다.
+          전국 낚시인들과 최대어 기록을 겨뤄보세요.
+        </p>
+        <div class="feature-bullets">
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              어종별 Top 3 랭킹
+              <span>민물 / 바다 전 어종 최대어 기록 경쟁</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              계측 길이 입력 시 랭킹 등록
+              <span>어림 길이가 아닌 정확한 계측값으로 공정하게</span>
+            </div>
+          </div>
+          <div class="bullet-item">
+            <div class="bullet-dot"></div>
+            <div class="bullet-text">
+              앵글러 레벨 시스템
+              <span>기록을 쌓을수록 레벨이 오르는 성장형 시스템</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-phone">
+        <div class="feature-phone-bg bg-gray"></div>
+        <div class="feature-phone-img">
+          <img src="./screenshot/IMG_3778.jpg" alt="명예의 전당 화면" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== SCREENSHOTS ===== -->
+<section id="screens" class="screens-section">
+  <div class="section-inner">
+    <div class="screens-header">
+      <div class="section-tag">스크린샷</div>
+      <h2 class="section-title">앱 화면 둘러보기</h2>
+      <p class="section-desc">
+        깔끔하고 심플한 오렌지 테마. 낚시에만 집중할 수 있는 UI.
+      </p>
+    </div>
+    <div class="screens-grid">
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3771.jpg" alt="로그인" />
+        </div>
+        <div class="screen-card-label">로그인</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3772.jpg" alt="도감" />
+        </div>
+        <div class="screen-card-label">도감</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3773.jpg" alt="어종 상세" />
+        </div>
+        <div class="screen-card-label">어종 상세</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3774.jpg" alt="아카이브" />
+        </div>
+        <div class="screen-card-label">아카이브</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3776.jpg" alt="어종별 조과" />
+        </div>
+        <div class="screen-card-label">어종별 조과</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3777.jpg" alt="MY 기록" />
+        </div>
+        <div class="screen-card-label">MY 기록</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3778.jpg" alt="명예의 전당" />
+        </div>
+        <div class="screen-card-label">명예의 전당</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-card-img">
+          <img src="./screenshot/IMG_3779.jpg" alt="피드" />
+        </div>
+        <div class="screen-card-label">피드</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">사용법</div>
+    <h2 class="section-title">이렇게 사용하세요</h2>
+    <p class="section-desc">3단계로 나만의 낚시 도감이 완성됩니다</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <h3 class="step-title">로그인</h3>
+        <p class="step-desc">구글, 카카오, 애플 계정으로 간편하게 로그인하세요. 별도 회원가입 없이 시작할 수 있습니다.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <h3 class="step-title">사진 기록</h3>
+        <p class="step-desc">물고기를 잡으면 사진과 함께 기록하세요. GPS·날씨·조류 정보가 자동으로 저장됩니다.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <h3 class="step-title">도감 완성</h3>
+        <p class="step-desc">새로운 어종을 잡을 때마다 도감이 해금됩니다. 75종 완성을 향해 전국을 누비세요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="download" class="cta-section">
+  <div class="section-inner" style="text-align: center;">
+    <div class="section-tag">다운로드</div>
+    <h2 class="section-title">지금 바로 시작하세요</h2>
+    <p class="section-desc">
+      무료로 시작하고, 나만의 낚시 도감을 완성하세요.<br>
+      iOS 앱스토어에서 AnglerDex를 검색하세요.
+    </p>
+    <div class="cta-btns">
+      <a href="#" class="btn-white">App Store 다운로드</a>
+      <a href="#screens" class="btn-white-outline">스크린샷 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="orange">Angler</span><span class="light">Dex</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">문의</a>
+    </div>
+    <div class="footer-copy">© 2026 AnglerDex. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Smooth active state for nav links on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? '#F57C00' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
