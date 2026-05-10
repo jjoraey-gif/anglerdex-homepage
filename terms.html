@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이용약관 — AnglerDex</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Pretendard', -apple-system, BlinkMacSystemFont,
+                   'Segoe UI', sans-serif;
+      color: #1A1A1A;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --orange: #F57C00;
+      --orange-light: #FFF3E0;
+      --gray-bg: #F5F5F5;
+      --gray-border: #E0E0E0;
+      --text-main: #1A1A1A;
+      --text-sub: #555555;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-border);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo .orange { color: var(--orange); }
+    .nav-back {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-back:hover { color: var(--orange); }
+
+    /* HERO */
+    .page-hero {
+      background: var(--gray-bg);
+      border-bottom: 1px solid var(--gray-border);
+      padding: 56px 40px 48px;
+    }
+    .page-hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .page-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .page-date {
+      font-size: 14px;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* CONTENT */
+    .content-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 40px 100px;
+    }
+
+    .summary-box {
+      background: var(--orange-light);
+      border-left: 4px solid var(--orange);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin-bottom: 56px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #7B3A00;
+      line-height: 1.7;
+    }
+
+    .article {
+      margin-bottom: 52px;
+    }
+    .article-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gray-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .article-body {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text-sub);
+      line-height: 1.9;
+    }
+    .article-body p {
+      margin-bottom: 12px;
+    }
+    .article-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-list {
+      margin: 10px 0 10px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sub-list li {
+      list-style: none;
+      padding-left: 14px;
+      position: relative;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+    .sub-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+      font-weight: 900;
+    }
+
+    .highlight-box {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.9;
+    }
+    .highlight-box strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: rgba(255,255,255,0.4);
+      padding: 36px 40px;
+      text-align: center;
+      font-size: 13px;
+    }
+    footer .f-logo {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    footer .f-logo .orange { color: var(--orange); }
+    footer .f-logo .light  { color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page-hero { padding: 40px 20px 32px; }
+      .page-title { font-size: 26px; }
+      .content-wrap { padding: 40px 20px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="orange">Angler</span>Dex
+  </div>
+  <a href="./index.html" class="nav-back">← 홈으로</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-tag">Legal</div>
+    <h1 class="page-title">이용약관</h1>
+    <p class="page-date">시행일: 2026년 5월 10일 &nbsp;|&nbsp; 최종 수정: 2026년 5월 10일</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <div class="summary-box">
+    본 약관은 AnglerDex(이하 "서비스")의 이용 조건 및 절차, 이용자와 서비스 간의 권리·의무 관계를 규정합니다. 서비스를 이용하시면 본 약관에 동의하신 것으로 간주됩니다.
+  </div>
+
+  <!-- 1 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">1</span>
+      목적
+    </div>
+    <div class="article-body">
+      <p>본 약관은 AnglerDex가 제공하는 낚시 기록 및 도감 서비스(이하 "서비스")의 이용과 관련하여 서비스와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">2</span>
+      용어의 정의
+    </div>
+    <div class="article-body">
+      <ul class="sub-list">
+        <li><strong>"서비스"</strong>란 AnglerDex가 제공하는 iOS 모바일 애플리케이션 및 관련 웹 서비스 일체를 말합니다.</li>
+        <li><strong>"이용자"</strong>란 본 약관에 동의하고 서비스를 이용하는 자를 말합니다.</li>
+        <li><strong>"계정"</strong>이란 이용자가 서비스에 접근하기 위해 소셜 로그인(Google, 카카오, Apple)을 통해 생성된 식별 정보를 말합니다.</li>
+        <li><strong>"콘텐츠"</strong>란 이용자가 서비스 내에 등록한 사진, 텍스트, 위치 정보 등 일체의 정보를 말합니다.</li>
+        <li><strong>"도감"</strong>이란 이용자가 낚시를 통해 수집·기록한 어종 목록 및 관련 정보를 말합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">3</span>
+      약관의 효력 및 변경
+    </div>
+    <div class="article-body">
+      <p>본 약관은 서비스 화면 또는 공식 홈페이지(anglerdex.co.kr)에 게시하여 효력이 발생합니다.</p>
+      <p>서비스는 관련 법령을 위반하지 않는 범위에서 본 약관을 변경할 수 있습니다. 약관 변경 시 시행일 7일 전에 앱 내 공지 또는 홈페이지를 통해 안내하며, 이용자가 변경 후에도 서비스를 계속 이용하면 변경된 약관에 동의한 것으로 봅니다.</p>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">4</span>
+      서비스 이용 및 계정
+    </div>
+    <div class="article-body">
+      <p>서비스는 Google, 카카오, Apple 소셜 로그인을 통해 이용할 수 있으며, 별도의 회원가입 절차는 없습니다.</p>
+      <p>이용자는 본인의 계정을 타인에게 양도하거나 공유할 수 없으며, 계정 보안에 대한 책임은 이용자 본인에게 있습니다.</p>
+      <p>만 14세 미만은 서비스를 이용할 수 없습니다.</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">5</span>
+      서비스의 제공
+    </div>
+    <div class="article-body">
+      <p>서비스는 다음과 같은 기능을 제공합니다.</p>
+      <ul class="sub-list">
+        <li>낚시 기록 등록 (사진, 어종, 길이, 위치, 조행 환경 데이터)</li>
+        <li>어종 도감 — 민물 26종, 바다 49종 수집 및 해금 시스템</li>
+        <li>아카이브 — 출조 통계, 최대어, 낚시 연대기 분석</li>
+        <li>명예의 전당 — 어종별 최대어 랭킹</li>
+        <li>피드 — 이용자 간 조과 공유</li>
+        <li>낚시 지도 — GPS 기반 포인트 시각화</li>
+        <li>앵글러 레벨 시스템 — 기록 기반 성장형 레벨</li>
+      </ul>
+      <p style="margin-top: 12px;">서비스는 연중무휴 24시간 제공을 원칙으로 하나, 시스템 점검·서버 장애·기타 불가피한 사유로 일시 중단될 수 있습니다.</p>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">6</span>
+      이용자의 콘텐츠
+    </div>
+    <div class="article-body">
+      <p>이용자가 서비스에 등록한 사진, 낚시 기록 등 콘텐츠의 저작권은 이용자 본인에게 있습니다.</p>
+      <p>다만 이용자는 서비스가 해당 콘텐츠를 서비스 운영 목적(피드 표시, 랭킹 계산, 도감 통계 등)에 한하여 사용할 수 있도록 허락합니다.</p>
+      <p>이용자는 다음에 해당하는 콘텐츠를 등록할 수 없습니다.</p>
+      <ul class="sub-list">
+        <li>타인의 저작권, 초상권, 개인정보를 침해하는 콘텐츠</li>
+        <li>허위·과장된 정보가 포함된 콘텐츠</li>
+        <li>욕설, 혐오, 음란물 등 공서양속에 반하는 콘텐츠</li>
+        <li>영리 목적의 광고·홍보성 콘텐츠</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">7</span>
+      이용자의 의무
+    </div>
+    <div class="article-body">
+      <p>이용자는 다음 행위를 해서는 안 됩니다.</p>
+      <ul class="sub-list">
+        <li>타인의 계정을 도용하거나 허위 정보로 서비스를 이용하는 행위</li>
+        <li>서비스의 운영을 방해하거나 서버에 과부하를 주는 행위</li>
+        <li>서비스를 역설계, 해킹, 크롤링하는 행위</li>
+        <li>랭킹 조작, 허위 조과 등록 등 서비스 공정성을 해치는 행위</li>
+        <li>관계 법령에 위반되는 행위</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">8</span>
+      서비스 이용 제한 및 계정 삭제
+    </div>
+    <div class="article-body">
+      <p>서비스는 이용자가 본 약관을 위반하거나 서비스 운영을 방해하는 경우, 사전 통보 없이 해당 계정의 이용을 제한하거나 삭제할 수 있습니다.</p>
+      <p>이용자는 언제든지 앱 내 설정 또는 이메일 요청을 통해 계정을 삭제(탈퇴)할 수 있으며, 삭제 즉시 모든 기록과 데이터는 파기됩니다.</p>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">9</span>
+      서비스의 변경 및 중단
+    </div>
+    <div class="article-body">
+      <p>서비스는 운영상·기술상의 이유로 서비스 내용을 변경하거나 중단할 수 있습니다. 서비스 중단 시 공식 홈페이지 또는 앱 내 공지를 통해 사전 안내합니다.</p>
+      <p>현재 서비스는 무료로 제공되며, 향후 유료 기능이 추가될 경우 사전에 공지합니다.</p>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">10</span>
+      면책 조항
+    </div>
+    <div class="article-body">
+      <p>서비스는 다음 사항에 대해 책임을 지지 않습니다.</p>
+      <ul class="sub-list">
+        <li>천재지변, 불가항력으로 인한 서비스 중단</li>
+        <li>이용자의 귀책 사유로 인한 서비스 이용 장애</li>
+        <li>이용자가 서비스를 통해 기대한 결과를 얻지 못한 경우</li>
+        <li>제3자(Google, 카카오, Apple 등)의 서비스 장애로 인한 문제</li>
+        <li>GPS, 날씨 등 외부 API 데이터의 오류 및 부정확성</li>
+        <li>낚시 활동 중 발생한 안전사고 및 재산 피해</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">11</span>
+      준거법 및 관할
+    </div>
+    <div class="article-body">
+      <p>본 약관은 대한민국 법령에 따라 해석·적용됩니다. 서비스 이용과 관련한 분쟁이 발생할 경우 대한민국 법원을 관할 법원으로 합니다.</p>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">12</span>
+      문의
+    </div>
+    <div class="article-body">
+      <p>약관에 관한 문의사항은 아래로 연락해 주세요.</p>
+      <div class="highlight-box">
+        <strong>AnglerDex 운영팀</strong><br>
+        이메일: <a href="mailto:jjoraey@gmail.com" style="color: var(--orange);">jjoraey@gmail.com</a><br>
+        처리 기간: 접수 후 영업일 기준 3일 이내 답변
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo"><span class="orange">Angler</span><span class="light">Dex</span></div>
+  © 2026 AnglerDex. All rights reserved.
+</footer>
+
+</body>
+</html>
